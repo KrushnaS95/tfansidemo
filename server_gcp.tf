@@ -1,5 +1,5 @@
 provider "google" {
-  project     = "techlanders-nov2024" # Replace with your GCP project ID
+  project     = "wise-boulder-444203-f0" # Replace with your GCP project ID
   region      = "europe-west4"
   zone        = "europe-west4-a"
 }
