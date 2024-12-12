@@ -1,0 +1,42 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+    # Step 1: Install apache2
+    - name: Install apache2
+      apt:
+        name: apache2
+        state: present
+        update_cache: yes  # Ensures apt cache is updated
+        force: yes  # Automatically installs package without confirmation
+
+    # Step 2: Remove default apache2 site configuration
+    - name: Remove default apache2 site configuration
+      file:
+        path: /etc/apache2/sites-enabled/000-default.conf
+        state: absent
+
+    # Step 3: Create a custom index.html page
+    - name: Create custom index.html
+      copy:
+        content: |
+          Hello Natwest guys, raman khanna this side, It's Friday!!
+        dest: /var/www/html/index.html
+        owner: www-data
+        group: www-data
+        mode: '0644'
+
+    # Step 4: Restart apache2 service to apply changes
+    - name: Ensure apache2 service is restarted and enabled
+      service:
+        name: apache2
+        state: restarted
+        enabled: yes
+
+    # Step 5: Add user 'raman'
+    - name: Ensure user raman exists
+      user:
+        name: raman
+        state: present  # Change to absent if you want to remove the user
+        shell: /bin/bash
+        create_home: yes

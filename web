@@ -1,0 +1,17 @@
+---
+- hosts: all
+  tasks:
+    - name: install httpd
+      package:
+        name: httpd
+        state: installed
+    - name: configure
+      shell: "echo Hello Natwest guys , raman khanna this side , Its firday !! > /var/www/html/index.html"
+    - name: start service
+      service:
+        name: httpd
+        state: started
+    - name: add user
+      user:
+        name: raman
+        state: absent
